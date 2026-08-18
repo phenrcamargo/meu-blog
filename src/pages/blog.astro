@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { formatDateToTerminalTimestamp } from "../utils/date.ts";
+import { getSortedPostsByDate } from "../utils/get-posts.ts";
+
+const sortedPosts = await getSortedPostsByDate();
+---
+
+<BaseLayout
+  title="Meu Blog"
+  description="Notas de estudo sobre desenvolvimento de software."
+>
+  <h1>Meus estudos</h1>
+
+  {
+    sortedPosts.map((post) => (
+      // Cada entrada é um <article>, então ela já herda toda a tipografia
+      // definida no BaseLayout para h1/h2/p/a etc. Não precisa de nenhuma
+      // classe extra aqui pra isso funcionar.
+      <article>
+        {/*
+          .log-stamp é a classe do "carimbo" em monoespaçada verde.
+          Escrevo o "// " na mão aqui (não é CSS) pra ficar acessível
+          e fácil de trocar o texto se um dia quiser outro formato.
+        */}
+        <p class="log-stamp">
+          // {formatDateToTerminalTimestamp(post.data.pubDate)}
+        </p>
+
+        <h2>
+          <a href={`/blog/${post.id}`}>{post.data.title}</a>
+        </h2>
+
+        <p>{post.data.description}</p>
+
+        {/*
+          .tag-list é a <ul> com display:flex e gap.
+          .tag é cada <li>, estilizado como um "chip" mono verde-claro.
+          Basta mapear o array de tags do frontmatter, nada mais.
+        */}
+        <ul class="tag-list">
+          {post.data.tags.map((tag) => (
+            <li class="tag">{tag}</li>
+          ))}
+        </ul>
+
+        {/*
+          <hr> aqui separa visualmente cada post na listagem,
+          usando a mesma linha fina definida no BaseLayout (var(--line)).
+          Fica melhor que um "card" pra esse clima de "log" sequencial.
+        */}
+        <hr />
+      </article>
+    ))
+  }
+</BaseLayout>

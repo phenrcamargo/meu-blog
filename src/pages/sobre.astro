@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Sobre — Pedro Camargo"
+  description="Um pouco sobre quem escreve este blog."
+>
+  <article>
+    {/* .log-stamp aqui só pra manter a mesma identidade visual do blog */}
+    <p class="log-stamp">// sobre mim</p>
+
+    <h1>Lorem ipsum dolor sit amet</h1>
+
+    {
+      /*
+      Envolvendo o texto em .prose (mesma classe usada no [slug].astro)
+      pra herdar a tipografia de leitura: parágrafos espaçados, links
+      sublinhados, blockquote com borda verde, etc.
+    */
+    }
+    <div class="prose">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat.
+      </p>
+
+      <p>
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+
+      <h2>Como estudo</h2>
+
+      <p>
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
+        illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+        explicabo.
+      </p>
+
+      <ul>
+        <li>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</li>
+        <li>Aut odit aut fugit, sed quia consequuntur magni dolores</li>
+        <li>Neque porro quisquam est, qui dolorem ipsum quia dolor sit</li>
+      </ul>
+
+      <blockquote>
+        Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
+        suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.
+      </blockquote>
+
+      <h2>Contato</h2>
+
+      <p>
+        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse
+        quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
+        voluptas nulla pariatur. Você pode me encontrar em
+        <a href="https://github.com">github.com/seu-usuario</a>.
+      </p>
+    </div>
+  </article>
+</BaseLayout>

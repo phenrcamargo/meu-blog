@@ -1,0 +1,53 @@
+---
+import { getCollection, render } from "astro:content";
+import { formatDateToTerminalTimestamp } from "../../utils/date.ts";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+
+  return posts.map((post) => ({
+    params: {
+      slug: post.id,
+    },
+    props: {
+      post,
+    },
+  }));
+}
+
+const { post } = Astro.props;
+
+const { Content } = await render(post);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article>
+    <p class="log-stamp">
+      // {formatDateToTerminalTimestamp(post.data.pubDate)}
+    </p>
+
+    <h1>{post.data.title}</h1>
+
+    <p>{post.data.description}</p>
+
+    <ul class="tag-list">
+      {post.data.tags.map((tag) => <li class="tag">{tag}</li>)}
+    </ul>
+
+    <hr />
+
+    {
+      /*
+      Aqui é o pulo do gato: envolvo o <Content /> em uma div.prose.
+      O <article> já teria a tipografia por padrão (o BaseLayout estiliza
+      "article" e ".prose" igualmente), mas usar .prose explicitamente
+      deixa claro pra quem ler o código que essa é a área de "texto corrido"
+      do markdown — separando ela do cabeçalho (título, tags, etc).
+    */
+    }
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

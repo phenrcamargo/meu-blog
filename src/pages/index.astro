@@ -1,0 +1,192 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { formatDateToTerminalTimestamp } from "../utils/date.ts";
+import { getLatestPost } from "../utils/get-posts.ts";
+
+const latestPosts = await getLatestPost();
+---
+
+<BaseLayout
+  title="Pedro Camargo"
+  description="Notas de estudo sobre desenvolvimento de software."
+>
+  <section class="hero">
+    {/* .log-stamp reaproveita o mesmo carimbo mono verde do blog */}
+    <p class="log-stamp">// bem-vindo</p>
+
+    <h1>Notas de um dev estudando em público.</h1>
+
+    <p class="lede">
+      Esse espaço existe pra registrar aquilo que vou aprendendo no dia a dia:
+      arquitetura, backend, ferramentas, e os tropeços no caminho. Menos um blog
+      polido, mais um caderno de anotações.
+    </p>
+
+    <div class="hero-links">
+      <a href="/blog" class="button">Ver todos os posts</a>
+
+      <a
+        href="https://github.com/seu-usuario/seu-blog"
+        class="button button-outline"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Repositório no GitHub
+      </a>
+
+      <a href="/sobre">Sobre mim →</a>
+    </div>
+  </section>
+
+  <hr />
+
+  <section class="recent">
+    <h2>Últimas entradas</h2>
+
+    {
+      latestPosts.map((post) => (
+        <article>
+          <p class="log-stamp">
+            // {formatDateToTerminalTimestamp(post.data.pubDate)}
+          </p>
+
+          <h3>
+            <a href={`/blog/${post.id}`}>{post.data.title}</a>
+          </h3>
+
+          <p>{post.data.description}</p>
+
+          <ul class="tag-list">
+            {post.data.tags.map((tag) => (
+              <li class="tag">{tag}</li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+
+    {
+      latestPosts.length === 0 && (
+        // Estado vazio, pro dia em que ainda não existe nenhum post.
+        <p class="empty">Nenhum post publicado ainda.</p>
+      )
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    margin-bottom: 2.5rem;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 0 0 0.6em;
+  }
+
+  .lede {
+    font-family: var(--font-body);
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    max-width: 55ch;
+    margin: 0 0 1.6em;
+  }
+
+  .hero-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .button {
+    display: inline-block;
+
+    background: var(--ink);
+    color: var(--paper);
+
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+
+    padding: 10px 18px;
+    border-radius: 6px;
+
+    transition: background 180ms ease;
+  }
+
+  .button:hover {
+    background: var(--accent);
+  }
+
+  .button-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+
+  .button-outline:hover {
+    background: var(--surface);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .hero-links > a:not(.button) {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .hero-links > a:not(.button):hover {
+    color: var(--ink);
+  }
+
+  /* Reaproveita o mesmo espaçamento entre entradas usado no /blog */
+  .recent article {
+    margin-top: 2rem;
+  }
+
+  .recent article + article {
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .recent h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--ink);
+    margin: 0 0 0.4em;
+  }
+
+  .recent h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin: 0 0 0.3em;
+  }
+
+  .recent h3 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .recent h3 a:hover {
+    color: var(--accent);
+  }
+
+  .recent p {
+    color: var(--ink-soft);
+    margin: 0 0 0.8em;
+  }
+
+  .empty {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+  }
+</style>
