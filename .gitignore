@@ -154,6 +154,3 @@ vite.config.ts.timestamp-*
 
 # generated types
 .astro/
-
-# package lock file
-package-lock.json
