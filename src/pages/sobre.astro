@@ -4,76 +4,131 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 <BaseLayout
   title="Sobre — Pedro Camargo"
-  description="Conheça Pedro Henrique Camargo, desenvolvedor de software com experiência em aplicações mobile e backend."
+  description="Pedro Henrique Camargo é desenvolvedor de software com experiência em Java, Spring, Flutter e React, interessado em arquitetura, qualidade e decisões técnicas conscientes."
 >
   <article>
-    {/* .log-stamp aqui só pra manter a mesma identidade visual do blog */}
     <p class="log-stamp">// sobre mim</p>
 
     <h1>Pedro Henrique Camargo</h1>
 
-    {
-      /*
-      Envolvendo o texto em .prose (mesma classe usada no [slug].astro)
-      pra herdar a tipografia de leitura: parágrafos espaçados, links
-      sublinhados, blockquote com borda verde, etc.
-    */
-    }
     <div class="prose">
       <p>
-        Sou desenvolvedor de software pleno e tenho atuado do desenvolvimento de
-        interfaces e serviços à integração com bancos de dados e infraestrutura.
-        Minha experiência combina principalmente Dart e Flutter no
-        desenvolvimento mobile e Java com Spring no backend. Também trabalho com
-        Linux, Docker, PostgreSQL, Redis e RabbitMQ.
+        Sou desenvolvedor de software pleno, com cerca de dez anos de
+        experiência em tecnologia da informação e quatro anos dedicados ao
+        desenvolvimento. Trabalho principalmente com Java e Spring no backend,
+        Dart e Flutter em aplicações mobile, e React em interfaces web. Também
+        tenho experiência com TypeScript, Node.js e sistemas legados.
       </p>
 
       <p>
-        Ao longo da carreira, colaborei com equipes multidisciplinares e atuei
-        em projetos com contextos muito diferentes. Além das minhas tecnologias
-        principais, tive contato com TypeScript e JavaScript, Angular, NestJS e
-        Node.js, e também com sistemas existentes em Java Swing e JSP. Essa
-        variedade me ensinou a me adaptar, entender o contexto antes de propor
-        mudanças e buscar soluções que façam sentido para o produto e para quem
-        vai mantê-las.
+        Minha trajetória passou por suporte, infraestrutura, qualidade de
+        software e desenvolvimento. Essa combinação me ajuda a olhar além da
+        implementação: procuro entender o problema, os requisitos e as
+        restrições operacionais antes de escolher uma solução. Gosto de analisar
+        os trade-offs entre simplicidade, desempenho, consistência, segurança e
+        facilidade de evolução, considerando o que faz sentido para o produto e
+        para a equipe que manterá o sistema.
+      </p>
+
+      <h2>Experiência aplicada</h2>
+
+      <p>
+        No desenvolvimento de produtos backend e mobile, já projetei um módulo
+        de alertas reativos em Java e Spring Boot usando o padrão Strategy. A
+        estrutura permitiu adicionar regras sem alterar as existentes. Também
+        implementei processamento periódico das regras, envio de notificações
+        push e um dashboard Flutter para acompanhar os alertas por criticidade.
       </p>
 
       <p>
-        Gosto entender a necessidade, conversar com as pessoas envolvidas,
-        implementar com cuidado e aprender com os resultados. Valorizo código
-        claro, decisões técnicas conscientes e colaboração. Procuro contribuir
-        com consistência no dia a dia e assumir responsabilidade pela qualidade
-        do que chega às mãos de quem usa o software.
+        Em uma integração entre aplicativo e backend, implementei idempotência
+        com uma tabela de rastreamento para impedir registros duplicados na
+        coleta de dados. Em outra frente, integrei um serviço on-premise ao
+        HashiCorp Vault para obter com segurança a chave privada do Firebase.
+        São exemplos de problemas em que confiabilidade e segurança precisam
+        fazer parte do desenho, e não ser acrescentadas no fim.
       </p>
-
-      <h2>Como estudo</h2>
 
       <p>
-        Aprender faz parte do meu trabalho. Estudo por meio de livros, cursos,
-        artigos e conteúdos de comunidades técnicas, sempre procurando conectar
-        os conceitos aos desafios reais de desenvolvimento. No momento, tenho
-        aprofundado meus estudos em arquitetura de software, design systems,
-        desenvolvimento orientado a especificações (SDD) e desenvolvimento
-        assistido por IA.
+        Também participei da decomposição de uma aplicação pequena em
+        JavaScript, que começou como um monólito modular com módulos bem
+        definidos. Como a maior parte das mudanças acontecia nos módulos de
+        transações e troco, cada alteração exigia uma release da aplicação
+        inteira. Separamos o sistema em sete microsserviços para permitir
+        releases independentes e publicar com mais frequência apenas os serviços
+        que evoluíam mais. Entre eles havia serviços de usuários, cadastro e
+        consulta de lojas e supermercados, transações, troco e autenticação.
       </p>
 
-      <p>Alguns materiais que têm contribuído para meus estudos:</p>
+      <p>
+        A separação também exigiu definir interfaces HTTP entre serviços, que
+        antes se comunicavam por chamadas diretas dentro do monólito. Cada
+        serviço passou a ter seu próprio banco PostgreSQL e rodava em containers
+        no Kubernetes da Oracle. Usávamos Kong como API Gateway para rotear as
+        requisições. Para esse sistema simples, a comunicação entre serviços era
+        síncrona via HTTP e não havia mensageria. A decisão trouxe autonomia
+        para releases, junto com novos limites de comunicação e operação que
+        precisavam ser considerados.
+      </p>
+
+      <p>
+        Minha experiência anterior com QA também influencia como desenvolvo:
+        planejo cenários, investigo falhas e valorizo testes automatizados.
+        Escrevo testes unitários e de integração com JUnit, Jest e Flutter Test,
+        além de trabalhar com Docker e pipelines de CI/CD. Em projetos com
+        PostgreSQL, já analisei planos de execução e índices para reduzir em até
+        99% o tempo de consultas específicas.
+      </p>
+
+      <h2>Ferramentas e tecnologias</h2>
 
       <ul>
-        <li>Livro - Aprenda Domain Driven Design - Vlad Khononov</li>
-        <li>Livro - Clean Code - Robert C. Martin</li>
-        <li>Livro - Clean Architecture - Robert C. Martin</li>
+        <li><strong>Backend:</strong> Java, Spring Boot, Node.js e NestJS.</li>
+        <li><strong>Frontend e mobile:</strong> React, Flutter e Dart.</li>
         <li>
-          Livro - Fundamentos da Arquitetura de Software - Mark Richards e Neal
-          Ford
+          <strong>Dados e integração:</strong> PostgreSQL, MongoDB, Redis, RabbitMQ
+          e APIs REST.
         </li>
-        <li>Curso - IA Driven Development - Formação Dev</li>
-        <li>Curso - Full Cycle 4.0</li>
+        <li>
+          <strong>Entrega e operação:</strong> Docker, Linux, Jenkins e GitHub Actions.
+        </li>
+      </ul>
+
+      <h2>Curiosidade e aprendizado contínuo</h2>
+
+      <p>
+        Tenho curiosidade por como sistemas funcionam de ponta a ponta: da
+        experiência na interface às decisões de arquitetura, dados e operação.
+        Estudo documentação oficial, leio, faço cursos e experimento ideias em
+        projetos práticos. Atualmente, estou aprofundando conhecimentos em
+        arquitetura de software, ciência de dados, segurança e desenvolvimento
+        orientado a especificações (SDD), inclusive no uso criterioso de IA ao
+        longo do ciclo de desenvolvimento.
+      </p>
+
+      <p>Alguns livros e cursos que fazem parte dos meus estudos:</p>
+
+      <ul>
+        <li>Aprenda Domain Driven Design — Vlad Khononov</li>
+        <li>Clean Code e Clean Architecture — Robert C. Martin</li>
+        <li>
+          Fundamentos da Arquitetura de Software — Mark Richards e Neal Ford
+        </li>
+      </ul>
+
+      <p>Alguns cursos que tenho feito recentemente:</p>
+      <ul>
+        <li>Full Cycle 4.0</li>
+        <li>AI Driven Development — Formação Dev</li>
+        <li>
+          Pós-graduação em Arquitetura de Software, Ciência de Dados e
+          Cybersecurity — PUC Campinas
+        </li>
       </ul>
 
       <p>
-        Também acompanho criadores e profissionais que compartilham experiências
-        e discussões técnicas:
+        Também acompanho profissionais que compartilham experiências e
+        discussões técnicas:
       </p>
 
       <ul>
@@ -101,15 +156,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       </ul>
 
       <blockquote>
-        "Construir software é aprender continuamente: sobre o problema, sobre as
-        pessoas e sobre as escolhas que tornam uma solução sustentável."
+        "A única maneira de ir rápido é ir bem." - Robert C. Martin
       </blockquote>
 
       <h2>Contato</h2>
 
       <p>
         Estou aberto a conversas sobre desenvolvimento de software e novas
-        oportunidades. Você pode falar comigo pelo
+        oportunidades. Você pode falar comigo pelo &nbsp
         <a
           href="https://www.linkedin.com/in/pedro-henrique-camargo-654412165/"
           target="_blank"

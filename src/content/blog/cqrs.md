@@ -8,7 +8,13 @@ tags:
   - cqrs
 ---
 
-Em muitas aplicações, o mesmo modelo de dados atende a tudo: criar um pedido, alterar seu status, montar uma tela de resumo e gerar um relatório. No começo isso costuma funcionar bem. Mas com o tempo as regras de escrita podem ficar complexas, enquanto as consultas precisam juntar dados de vários lugares e responder rápido. Um único modelo acaba tentando resolver problemas bem diferentes.
+Em muitas aplicações, o volume e o perfil das leituras são diferentes dos das escritas. Uma tela de acompanhamento pode fazer milhares de consultas para cada atualização de pedido, por exemplo. Essa assimetria pressiona o banco de formas distintas: as leituras querem consultas rápidas e formatos convenientes, enquanto as escritas precisam validar regras e persistir mudanças com segurança.
+
+É comum tentar resolver a lentidão das consultas aumentando verticalmente os recursos do banco ou criando índices nas colunas mais consultadas. Essas medidas podem ajudar em casos específicos, mas não eliminam a diferença entre os padrões de leitura e escrita. Mais CPU e memória aumentam a capacidade geral, sem tornar consultas complexas mais simples; índices aceleram buscas, mas ocupam espaço e precisam ser atualizados a cada inserção, alteração ou remoção, adicionando custo às escritas. Quando os dois fluxos disputam o mesmo modelo e os mesmos recursos, otimizar um lado pode pressionar o outro.
+
+O **CQRS** (_Command Query Responsibility Segregation_) propõe separar as responsabilidades de comando e consulta na arquitetura. Em uma implantação, isso pode significar um servidor ou serviço de escrita, responsável por validar e gravar mudanças, e um servidor ou serviço de leitura, preparado para responder às consultas. A fonte da verdade pode ser um banco relacional no lado de escrita, enquanto o lado de leitura usa um modelo próprio em uma tecnologia adequada ao acesso, como MongoDB, Cassandra ou Redis. A separação também pode começar apenas no código, sem servidores ou bancos distintos.
+
+Essa arquitetura é diferente de simplesmente adicionar uma **read replica**. Uma réplica normalmente copia o banco de escrita para distribuir consultas, mantendo essencialmente o mesmo modelo de dados. No CQRS, o modelo de leitura pode ser transformado e organizado para as consultas da aplicação, inclusive em outro tipo de banco. Uma forma de manter essa projeção atualizada é usar captura de mudanças de dados (_Change Data Capture_, ou CDC): o Debezium captura as alterações do banco de escrita, publica eventos no Kafka e consumidores atualizam o modelo de leitura. Como esse processamento pode ocorrer depois da gravação, as leituras podem ficar temporariamente defasadas.
 
 É aí que entra o **CQRS**, sigla para _Command Query Responsibility Segregation_. O nome é comprido, mas a ideia central é direta: separar as operações que alteram o estado do sistema das operações que apenas consultam esse estado.
 
@@ -85,7 +91,7 @@ Nesse desenho, o modelo de escrita continua cuidando das regras do pedido e o mo
 
 ## O que CQRS não exige
 
-CQRS não significa obrigatoriamente ter um banco para escrita e outro para leitura. Também não exige microsserviços, mensageria ou _Event Sourcing_. Essas técnicas podem ser combinadas com CQRS quando resolvem necessidades reais, mas adicionam operação e pontos de falha.
+CQRS não significa obrigatoriamente ter um banco para escrita e outro para leitura, nem exige que os lados sejam servidores separados. Também não exige microsserviços, mensageria ou _Event Sourcing_. Essas técnicas podem ser combinadas com CQRS quando resolvem necessidades reais, mas adicionam operação e pontos de falha. Uma read replica pode distribuir carga de leitura, mas, por si só, não cria um modelo de leitura específico como o CQRS permite.
 
 Vale começar pela separação lógica entre comandos e consultas. Se houver uma necessidade concreta, como leituras com alto volume, consultas difíceis de otimizar ou modelos de apresentação muito diferentes, aí faz sentido considerar projeções e infraestrutura adicional.
 
